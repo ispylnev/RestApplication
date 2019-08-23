@@ -1,0 +1,18 @@
+version: '3'
+services:
+  db:
+    image: postgres:11.4-alpine
+    container_name: postgres
+    ports:
+      - 5432:5432
+#    volumes:
+#      - postgres:/var/lib/postgres/data/pgdate
+
+    environment:
+     - POSTGRESS_PASSWORD: 123
+     - POSTGRES_DB: docker_test
+     - PGDATA: /var/lib/postgres/data/pgdate
+#  volumes:
+#    postgres:
+#      external: true
+    restart: always
