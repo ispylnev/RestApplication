@@ -5,14 +5,10 @@ services:
     container_name: postgres
     ports:
       - 5432:5432
-#    volumes:
-#      - postgres:/var/lib/postgres/data/pgdate
-
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data/pgdata
     environment:
-     - POSTGRESS_PASSWORD: 123
-     - POSTGRES_DB: docker_test
-     - PGDATA: /var/lib/postgres/data/pgdate
-#  volumes:
-#    postgres:
-#      external: true
+      POSTGRES_PASSWORD: 12345678
+      POSTGRES_DB: docker_test
+      PGDATA: /var/lib/postgres/data/pgdate
     restart: always
