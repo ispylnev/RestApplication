@@ -25,6 +25,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable();
     }
 
+
+    /**
+     *Нужен для того ,чтобы после авторизации пользователя записать его в БД
+     * @param userDetailsRepo
+     * @return
+     */
     @Bean
     public PrincipalExtractor principalExtractor(UserDetailsRepo userDetailsRepo) {
         return map -> {

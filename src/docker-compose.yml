@@ -8,7 +8,8 @@ services:
     volumes:
       - ./pg_data:/var/lib/postgresql/data/pgdata
     environment:
-      POSTGRES_PASSWORD: 12345678
+      POSTGRES_USER: Ivan
+      POSTGRES_PASSWORD: 123456789
       POSTGRES_DB: docker_test
       PGDATA: /var/lib/postgres/data/pgdate
     restart: always

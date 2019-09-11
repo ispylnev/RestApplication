@@ -3,7 +3,6 @@ package example.rest.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import example.rest.domain.Message;
 import example.rest.domain.Views;
-import example.rest.exeptions.NotFoundExeption;
 import example.rest.repo.MessageRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 
 @RestController
