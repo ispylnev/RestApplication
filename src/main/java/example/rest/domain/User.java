@@ -19,4 +19,12 @@ public class User {
     private String gender;
     private String locale;
     private LocalDate localVisit;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
