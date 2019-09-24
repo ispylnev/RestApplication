@@ -1,0 +1,26 @@
+{
+  "name": "rest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ispylnev/RestApplication.git",
+  "author": "ispylnev <ivan_pylnev@mail.ru>",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "dependencies": {
+    "vue": "^2.6.10",
+    "vue-resource": "^1.5.1",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "babel-loader": "^8.0.6",
+    "vue-loader": "^15.7.1",
+    "vue-template-loader": "^1.0.0",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
+  }
+}

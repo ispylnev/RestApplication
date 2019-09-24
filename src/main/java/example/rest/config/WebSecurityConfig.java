@@ -52,7 +52,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 return newUser;
             });
             user.setLocalVisit(LocalDate.now());
-            return userDetailsRepo.save(user).getId();
+            userDetailsRepo.save(user);
+            return user;
         };
     }
 }

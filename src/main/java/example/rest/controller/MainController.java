@@ -3,6 +3,7 @@ package example.rest.controller;
 import example.rest.domain.User;
 import example.rest.repo.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ import java.util.HashMap;
 public class MainController {
 
     final MessageRepo messageRepo;
+
+    @Value("${spring.profiles.active}")
+    private String profile;
 
     @Autowired
     public MainController(MessageRepo messageRepo) {
@@ -37,6 +41,7 @@ public class MainController {
 
 
         model.addAttribute("frontendData", data);
+        model.addAttribute("isDevMode","dev".equals(profile));
         return "index";
     }
 }
