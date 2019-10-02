@@ -34,5 +34,6 @@ dependencies {
 	compile('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE')
 	compile group: 'org.springframework.session', name: 'spring-session-jdbc', version: '2.1.8.RELEASE'
 	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+	compile("org.springframework.boot:spring-boot-starter-websocket")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
