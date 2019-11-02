@@ -10,19 +10,19 @@
   },
   "dependencies": {
     "@stomp/stompjs": "^5.4.0",
-    "sockjs-client": "^1.4.0",
+    "sockjs-client": "^1.4web.0",
     "vue": "^2.6.10",
     "vue-resource": "^1.5.1",
     "vue-template-compiler": "^2.6.10"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/preset-env": "^7.6.0",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
     "babel-loader": "^8.0.6",
-    "vue-loader": "^15.7.1",
+    "vue-loader": "^15.7.2",
     "vue-template-loader": "^1.0.0",
-    "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.8.1"
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
   }
 }
