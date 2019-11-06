@@ -12,5 +12,6 @@ Vue.use(VueResource)
 Vue.use(Vuetify)
 new Vue({
     el: '#app',
+    vuetify: new Vuetify(),
     render: a => a(App)
 })
