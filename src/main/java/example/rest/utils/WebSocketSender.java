@@ -29,7 +29,8 @@ public class WebSocketSender {
      */
     public <T> BiConsumer<EventType, T> getSender(ObjectType objectType, Class jsonView) {
         ObjectWriter writer = getObjectWithConfigMapper(jsonView);
-        return (EventType eventType, T payload) -> {
+        return (EventType eventType, T payload)
+                -> {
             String value = null;
             try {
                 value = writer.writeValueAsString(payload);
