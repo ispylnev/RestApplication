@@ -50,24 +50,28 @@ public class MessageController {
 
     }
 
+    //with http
+//    @PutMapping("{id}")
+//    public Message update(@PathVariable("id") Message messageFromDb, @RequestBody Message message) {
+//        BeanUtils.copyProperties(message, messageFromDb, "id");
+//        return messageRepo.save(messageFromDb);
+//    }
+
+    //with http
     @PutMapping("{id}")
     public Message update(@PathVariable("id") Message messageFromDb, @RequestBody Message message) {
         BeanUtils.copyProperties(message, messageFromDb, "id");
-        return messageRepo.save(messageFromDb);
+        Message updatedMessages = messageRepo.save(message);
+        webSocketSender.accept(EventType.UPDATE, updatedMessages);
+
+        return updatedMessages;
     }
 
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Message message) {
         messageRepo.delete(message);
+        webSocketSender.accept(EventType.DELETE, message);
     }
 
-//    //Отвечает за мэппинг для запросов по webSocket
-//    @MessageMapping("/changeMessage")
-//    //topic for subscribe the client
-//    @SendTo("/topic/activity")
-//    public Message message(Message message) {
-//        String test;
-//        return messageRepo.save(message);
-//    }
 }
