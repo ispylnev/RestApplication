@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-toolbar app>
-            <v-toolbar-title>Sarafan</v-toolbar-title>
+            <v-toolbar-title>RestApplication</v-toolbar-title>
             <v-spacer></v-spacer>
             <span v-if="profile">{{profile.name}}</span>
             <v-btn v-if="profile" icon href="/logout">
