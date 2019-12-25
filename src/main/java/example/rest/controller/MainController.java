@@ -42,4 +42,6 @@ public class MainController {
         model.addAttribute("isDevMode", "dev".equals(profile));
         return "index";
     }
+
+
 }
