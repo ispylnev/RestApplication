@@ -30,6 +30,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.postgresql:postgresql')
 	compile('org.projectlombok:lombok')
+	compile 'org.jsoup:jsoup:1.12.1'
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE')
 	compile group: 'org.springframework.session', name: 'spring-session-jdbc', version: '2.1.8.RELEASE'
