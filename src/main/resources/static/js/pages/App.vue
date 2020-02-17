@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-toolbar app>
+        <v-app-bar app>
             <v-toolbar-title>Sarafan</v-toolbar-title>
             <v-btn flat
                    v-if="profile"
@@ -18,7 +18,7 @@
             <v-btn v-if="profile" icon href="/logout">
                 <v-icon>exit_to_app</v-icon>
             </v-btn>
-        </v-toolbar>
+        </v-app-bar>
         <v-content>
             <router-view></router-view>
         </v-content>

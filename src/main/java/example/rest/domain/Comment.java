@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table
 @Data
 
-@EqualsAndHashCode
+@EqualsAndHashCode(of = { "id" })
 public class Comment {
 
     @Id

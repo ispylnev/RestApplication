@@ -3,6 +3,7 @@ package example.rest.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import example.rest.domain.Message;
 import example.rest.domain.User;
 import example.rest.domain.Views;
 import example.rest.repo.MessageRepo;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 //for HTML page 'index'
@@ -50,13 +52,12 @@ public class MainController {
         HashMap<Object, Object> data = new HashMap<>();
         if (user != null) {
             data.put("profile", user);
-            model.addAttribute("messages", writer.writeValueAsString(messageRepo.findAll()));
+            String messages =  writer.writeValueAsString(messageRepo.findAll());
+            model.addAttribute("messages", messages);
         }
 
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(profile));
         return "index";
     }
-
-
 }

@@ -29,9 +29,16 @@ public class Message {
     @JoinColumn(name = "user_id")
     private User author;
 
-    @OneToMany(mappedBy = "message", orphanRemoval = true)
+    @OneToMany(mappedBy = "message",orphanRemoval = true, cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonView(Views.FullMessage.class)
-    private List<Comment> commentsList;
+    private List<Comment> comments;
+
+    private  void setComments(List<Comment> comments){
+        this.comments.clear();
+        this.comments.addAll(comments);
+    }
+
+
 
     @Column(updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
