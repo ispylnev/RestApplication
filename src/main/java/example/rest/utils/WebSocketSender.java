@@ -34,8 +34,11 @@ public class WebSocketSender {
             String value = null;
             try {
                 value = writer.writeValueAsString(payload);
-                simpMessagingTemplate.convertAndSend("/topic/activity",
-                        new WebSocketEventDto(objectType, eventType, value));
+
+                WebSocketEventDto objectToWebSocket = new WebSocketEventDto(objectType, eventType, value);
+
+                simpMessagingTemplate.convertAndSend("/topic/activity",objectToWebSocket);
+                System.out.println();
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
