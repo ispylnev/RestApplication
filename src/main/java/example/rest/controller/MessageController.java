@@ -8,6 +8,7 @@ import example.rest.dto.EventType;
 import example.rest.dto.MetaDto;
 import example.rest.dto.ObjectType;
 import example.rest.repo.MessageRepo;
+import example.rest.service.MessageService;
 import example.rest.utils.WebSocketSender;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -41,10 +42,12 @@ public class MessageController {
 
     private final MessageRepo messageRepo;
     private final BiConsumer<EventType, Message> webSocketSender;
+    private final MessageService messageService;
 
     @Autowired
-    public MessageController(MessageRepo messageRepo, WebSocketSender sender) {
+    public MessageController(MessageRepo messageRepo, WebSocketSender sender, MessageService messageService) {
         this.messageRepo = messageRepo;
+        this.messageService = messageService;
         this.webSocketSender = sender.getSender(ObjectType.MESSAGE, Views.IdName.class);
     }
 
@@ -89,7 +92,7 @@ public class MessageController {
     public Message update(@PathVariable("id") Message messageFromDb, @RequestBody Message message) throws IOException {
         BeanUtils.copyProperties(message, messageFromDb, "id");
         fillMeta(message);
-        Message updatedMessages = messageRepo.save(message);
+        Message updatedMessages = messageService.save(message);
         webSocketSender.accept(EventType.UPDATE, updatedMessages);
 
         return updatedMessages;
