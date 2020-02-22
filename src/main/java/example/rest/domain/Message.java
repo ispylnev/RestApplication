@@ -8,12 +8,14 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
 @Data
 @EqualsAndHashCode(of = {"id"})
-@ToString(of = {"id","text"})
+@ToString(of = {"id", "text"})
 public class Message {
 
     @Id
@@ -22,6 +24,29 @@ public class Message {
     private Long id;
     @JsonView(Views.IdName.class)
     private String text;
+
+    @ManyToOne
+    @JsonView(Views.FullMessage.class)
+    @JoinColumn(name = "user_id")
+    private User author;
+
+    @OneToMany(mappedBy = "message",
+            orphanRemoval = true,
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JsonView(Views.FullMessage.class)
+    private List<Comment> comments = new ArrayList<>();
+
+    public void setComments(List<Comment> comments) {
+        if (comments == null) {
+            this.comments = new ArrayList<>();
+            return;
+        }
+        this.comments.clear();
+        this.comments.addAll(comments);
+    }
+
 
     @Column(updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

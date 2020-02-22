@@ -1,5 +1,6 @@
 package example.rest.domain;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -14,7 +15,9 @@ import java.time.LocalDate;
 public class User implements Serializable {
     @Id
     private String id;
+    @JsonView(Views.IdName.class)
     private String name;
+    @JsonView(Views.IdName.class)
     private String userPic;
     private String email;
     private String gender;

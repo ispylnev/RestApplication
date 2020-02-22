@@ -2,11 +2,13 @@ package example.rest.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import example.rest.domain.Message;
+import example.rest.domain.User;
 import example.rest.domain.Views;
 import example.rest.dto.EventType;
 import example.rest.dto.MetaDto;
 import example.rest.dto.ObjectType;
 import example.rest.repo.MessageRepo;
+import example.rest.service.MessageService;
 import example.rest.utils.WebSocketSender;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,14 +16,18 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static java.util.Collections.addAll;
 
 
 @RestController
@@ -36,10 +42,12 @@ public class MessageController {
 
     private final MessageRepo messageRepo;
     private final BiConsumer<EventType, Message> webSocketSender;
+    private final MessageService messageService;
 
     @Autowired
-    public MessageController(MessageRepo messageRepo, WebSocketSender sender) {
+    public MessageController(MessageRepo messageRepo, WebSocketSender sender, MessageService messageService) {
         this.messageRepo = messageRepo;
+        this.messageService = messageService;
         this.webSocketSender = sender.getSender(ObjectType.MESSAGE, Views.IdName.class);
     }
 
@@ -55,10 +63,17 @@ public class MessageController {
     }
 
 
+    /**
+     *
+     * @param message
+     * @param user - author comment
+     * @return
+     */
     @PostMapping
-    public Message create(@RequestBody Message message) throws IOException {
+    public Message create(@RequestBody Message message, @AuthenticationPrincipal User user) throws IOException {
         message.setLocalDateTime(LocalDateTime.now());
         fillMeta(message);
+        message.setAuthor(user);
         Message updatedMessages = messageRepo.save(message);
         webSocketSender.accept(EventType.CREATE, updatedMessages);
         return updatedMessages;
@@ -77,7 +92,7 @@ public class MessageController {
     public Message update(@PathVariable("id") Message messageFromDb, @RequestBody Message message) throws IOException {
         BeanUtils.copyProperties(message, messageFromDb, "id");
         fillMeta(message);
-        Message updatedMessages = messageRepo.save(message);
+        Message updatedMessages = messageService.save(message);
         webSocketSender.accept(EventType.UPDATE, updatedMessages);
 
         return updatedMessages;
@@ -90,6 +105,11 @@ public class MessageController {
         webSocketSender.accept(EventType.DELETE, message);
     }
 
+    /**
+     * for use openGraff protocol and twitter card
+     * @param message
+     * @throws IOException
+     */
     private void fillMeta(Message message) throws IOException {
         String text = message.getText();
         Matcher matcher = URL_REGEX.matcher(text);

@@ -1,17 +1,20 @@
 import SockJS from 'sockjs-client'
-import {Stomp} from "@stomp/stompjs/esm5/compatibility/stomp";
+import { Stomp } from '@stomp/stompjs'
 
-var stompClient = null;
-const handlers = [];
+
+let stompClient = null
+const handlers = []
 
 export function connect() {
-    var socket = new SockJS('/gs-guide-websocket');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
+    const socket = new SockJS('/gs-guide-websocket')
+    stompClient = Stomp.over(socket)
+    stompClient.debug = () => {}
+    stompClient.connect({}, frame => {
         stompClient.subscribe('/topic/activity', message => {
             handlers.forEach(handler => handler(JSON.parse(message.body)))
+            // handlers.forEach(handler => handler(message))
         })
-    });
+    })
 }
 
 export function addHandler(handler) {
@@ -26,9 +29,5 @@ export function disconnect() {
 }
 
 export function sendMessage(message) {
-    connect();
-    setTimeout(function () {
-        stompClient.publish({destination: "/app/changeMessage", body: JSON.stringify(message)});
-    }, 100);
+    stompClient.send("/app/changeMessage", {}, JSON.stringify(message))
 }
-
