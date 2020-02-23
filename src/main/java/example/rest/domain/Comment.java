@@ -23,7 +23,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "message_id")
-    @JsonView(Views.FullComment.class)
+    @JsonView(Views.IdName.class)
     private Message message;
 
     @ManyToOne
