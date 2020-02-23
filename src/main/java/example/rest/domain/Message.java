@@ -1,10 +1,10 @@
 package example.rest.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.jboss.logging.LogMessage;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,11 +16,13 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(of = {"id"})
 @ToString(of = {"id", "text"})
+
 public class Message {
 
     @Id
     @GeneratedValue
     @JsonView(Views.IdName.class)
+    @JsonProperty("id")
     private Long id;
     @JsonView(Views.IdName.class)
     private String text;
@@ -35,7 +37,7 @@ public class Message {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    @JsonView(Views.FullMessage.class)
+    @JsonView(Views.IdName.class)
     private List<Comment> comments = new ArrayList<>();
 
     public void setComments(List<Comment> comments) {
