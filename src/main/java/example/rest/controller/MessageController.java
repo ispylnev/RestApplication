@@ -4,15 +4,17 @@ import com.fasterxml.jackson.annotation.JsonView;
 import example.rest.domain.Message;
 import example.rest.domain.User;
 import example.rest.domain.Views;
+import example.rest.dto.MessagePageDto;
 import example.rest.repo.MessageRepo;
 import example.rest.service.MessageService;
-import example.rest.utils.WebSocketSender;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 
 @RestController
@@ -23,18 +25,23 @@ public class MessageController {
 
     private final MessageService messageService;
 
+    public static  final int MESSAGES_DEF_PER_PAGE = 3;
+
 
     @Autowired
-    public MessageController(MessageRepo messageRepo, WebSocketSender sender, MessageService messageService) {
+    public MessageController(MessageRepo messageRepo, MessageService messageService) {
         this.messageRepo = messageRepo;
         this.messageService = messageService;
 
     }
 
     @GetMapping
-    @JsonView(Views.IdName.class)
-    public List<Message> list() {
-        return messageRepo.findAll();
+    @JsonView(Views.FullMessage.class)
+    public MessagePageDto pageDto(@PageableDefault(size = MESSAGES_DEF_PER_PAGE, sort = {"id"},
+            direction = Sort.Direction.DESC)
+                                          Pageable page) {
+
+        return messageService.findAll(page);
     }
 
     @GetMapping("{id}")

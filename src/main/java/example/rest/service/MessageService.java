@@ -4,6 +4,7 @@ import example.rest.domain.Message;
 import example.rest.domain.User;
 import example.rest.domain.Views;
 import example.rest.dto.EventType;
+import example.rest.dto.MessagePageDto;
 import example.rest.dto.MetaDto;
 import example.rest.dto.ObjectType;
 import example.rest.repo.MessageRepo;
@@ -14,6 +15,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -117,5 +120,15 @@ public class MessageService {
         Message updatedMessages = messageRepo.save(message);
         webSocketSender.accept(EventType.CREATE, updatedMessages);
         return updatedMessages;
+    }
+
+    public MessagePageDto findAll(Pageable pageable) {
+        Page<Message> messagePage = messageRepo.findAll(pageable);
+        MessagePageDto messagePageDto = MessagePageDto.builder()
+                .currentPage(pageable.getPageNumber())
+                .totalPages(messagePage.getTotalPages())
+                .messageList(messagePage.getContent())
+                .build();
+        return messagePageDto;
     }
 }
