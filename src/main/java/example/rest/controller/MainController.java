@@ -59,8 +59,8 @@ public class MainController {
             String messages = writer.writeValueAsString(messagePageDto);
 
             model.addAttribute("messages", messages);
-            data.put("currentPage",messagePageDto.getCurrentPage());
-            data.put("totalPages",messagePageDto.getTotalPages());
+            data.put("currentPage", messagePageDto.getCurrentPage());
+            data.put("totalPages", messagePageDto.getTotalPages());
         } else {
             model.addAttribute("messages", "[]");
         }
