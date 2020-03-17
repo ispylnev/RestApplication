@@ -12,6 +12,7 @@ export default new Vuex.Store({
         ...frontendData
     },
     getters: {
+
         sortedMessages: state => (state.messages || []).sort((a, b) => -(a.id - b.id))
     },
     mutations: {
@@ -65,7 +66,7 @@ export default new Vuex.Store({
                     result[val.id] = val;
                     return result
                 }, {})
-            state.messages = Object.values()
+            state.messages = Object.values(targetMessages)
 
         },
 

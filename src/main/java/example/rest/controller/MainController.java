@@ -51,12 +51,13 @@ public class MainController {
 
         HashMap<Object, Object> data = new HashMap<>();
         if (user != null) {
+            data.put("profile", user);
 
             PageRequest start = startDefaultMessageList();
+
             MessagePageDto messagePageDto = messageService.findAll(start);
 
-            data.put("profile", user);
-            String messages = writer.writeValueAsString(messagePageDto);
+            String messages = writer.writeValueAsString(messagePageDto.getMessageList());
 
             model.addAttribute("messages", messages);
             data.put("currentPage", messagePageDto.getCurrentPage());

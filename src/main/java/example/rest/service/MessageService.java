@@ -124,11 +124,10 @@ public class MessageService {
 
     public MessagePageDto findAll(Pageable pageable) {
         Page<Message> messagePage = messageRepo.findAll(pageable);
-        MessagePageDto messagePageDto = MessagePageDto.builder()
+        return MessagePageDto.builder()
                 .currentPage(pageable.getPageNumber())
                 .totalPages(messagePage.getTotalPages())
                 .messageList(messagePage.getContent())
                 .build();
-        return messagePageDto;
     }
 }
