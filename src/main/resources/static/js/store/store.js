@@ -9,9 +9,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         messages,
-        profile: frontendData.profile
+        ...frontendData
     },
     getters: {
+
         sortedMessages: state => (state.messages || []).sort((a, b) => -(a.id - b.id))
     },
     mutations: {
@@ -57,6 +58,26 @@ export default new Vuex.Store({
                     ...state.messages.slice(updateIndex + 1)
                 ]
         },
+
+        addMessagePageMutation(state, messages) {
+            const targetMessages = state.messages = state.messages
+                .concat(messages)
+                .reduce((result, val) => {
+                    result[val.id] = val;
+                    return result
+                }, {})
+            state.messages = Object.values(targetMessages)
+
+        },
+
+        updateTotalPagesMutation(state, totalPage) {
+            state.totalPages = totalPage;
+        },
+
+
+        updateCurrentPageMutation(state, currentPage) {
+            state.currentPage = currentPage;
+        }
     },
     actions: {
         async addMessageAction({commit, state}, message) {
@@ -86,6 +107,14 @@ export default new Vuex.Store({
             const response = await commentApi.add(comment)
             const data = await response.json()
             commit('addCommentMutation', data)
+        },
+
+        async loadPageAction({commit, state}) {
+            const response = await messagesApi.page(state.currentPage + 1)
+            const data = await response.json()
+            commit('addMessagePageMutation', data.messages)
+            commit('updateTotalPagesMutation', data.totalPages)
+            commit('updateCurrentPageMutation', Math.min(data.currentPage, data.totalPages))
         }
     }
 })
