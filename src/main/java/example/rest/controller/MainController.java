@@ -27,7 +27,7 @@ public class MainController {
 
     private final MessageService messageService;
 
-    @Value("${spring.profiles.active}")
+    @Value("${spring.profiles.active:prod}")
     private String profile;
 
     //для удаления не нужных полей

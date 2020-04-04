@@ -6,7 +6,8 @@
   "author": "ispylnev <ivan_pylnev@mail.ru>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
@@ -15,7 +16,7 @@
     "vue": "^2.6.10",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.1.3",
-    "vue-template-compiler": "^2.6.10",
+    "vue-template-compiler": "^2.6.11",
     "vuerify": "^0.4.0",
     "vuetify": "^2.1.9",
     "vuex": "^3.1.2"
@@ -24,6 +25,7 @@
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
     "deepmerge": "^4.2.2",
     "fibers": "^4.0.2",
@@ -34,6 +36,7 @@
     "vue-template-loader": "^1.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^4.2.2"
   }
 }

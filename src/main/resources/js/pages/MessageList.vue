@@ -12,8 +12,8 @@
 
 <script>
     import { mapGetters } from 'vuex'
-    import MessageRow from 'components/messages/MessageRow.vue'
-    import MessageForm from 'components/messages/MessageForm.vue'
+    import MessageRow from 'js/components/messages/MessageRow.vue'
+    import MessageForm from 'js/components/messages/MessageForm.vue'
     export default {
         components: {
             MessageRow,

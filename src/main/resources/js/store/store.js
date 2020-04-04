@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import messagesApi from 'api/messages'
-import commentApi from 'api/comment'
+import messagesApi from 'js/api/messages'
+import commentApi from 'js/api/comment'
 
 
 Vue.use(Vuex)

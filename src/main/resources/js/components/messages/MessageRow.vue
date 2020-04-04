@@ -45,7 +45,7 @@
 
 <script>
     import {mapActions} from 'vuex'
-    import Media from 'components/media/Media.vue'
+    import Media from 'js/components/media/Media.vue'
     import CommentList from '../comment/CommentList.vue'
 
     export default {
